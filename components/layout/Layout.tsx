@@ -60,7 +60,7 @@ export default function Layout(props: Props) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar variant="elevation" color="transparent" elevation={12}>
+      <AppBar variant="elevation" color="primary" elevation={12}>
         <Toolbar
           sx={{
             display: "flex",
@@ -70,21 +70,37 @@ export default function Layout(props: Props) {
             paddingY: 1,
           }}
         >
-          <Typography variant="h3" component="div">
+          <Typography
+            variant="h3"
+            component="div"
+            sx={{
+              background:
+                "conic-gradient(from .5turn at 0% 0%, #00c476, 10%, #82b0ff, 90%, #00c476)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
             MOVIES HUB
           </Typography>
         </Toolbar>
       </AppBar>
       <Toolbar id="back-to-top-anchor" />
 
-      <Box sx={{ margin: 4 }}>{props.children}</Box>
+      <Box
+        sx={{
+          marginBottom: 20,
+          marginTop: 10,
+        }}
+      >
+        {props.children}
+      </Box>
+      <BottomNav />
 
       <ScrollTop {...props}>
         <Fab size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>
-      <BottomNav />
     </React.Fragment>
   );
 }
