@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Pagination, Stack } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -6,12 +6,18 @@ import useSWR from "swr";
 import { Trending } from "./api/trending";
 import { img_300 } from "../config/imageConfig";
 import { MovieCard } from "../components";
+import { useState } from "react";
+import Movie from "./movie";
 
 const Home: NextPage = () => {
+  const [page, setPage] = useState(1);
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data: trendingData } = useSWR<Trending>("/api/trending", fetcher);
+  const { data: trendingData, isValidating } = useSWR<Trending>(
+    `/api/trending?page=${page}`,
+    fetcher
+  );
 
-  console.log(trendingData);
+  // console.log(page);
   return (
     <>
       <Head>
@@ -19,12 +25,28 @@ const Home: NextPage = () => {
       </Head>
       <Grid container gap={8} justifyContent="center">
         {trendingData?.results &&
-          trendingData.results.map((movie, index) => (
+          trendingData.results.map((trending, index) => (
             <Grid item key={index}>
-              <MovieCard movie={movie} />
+              <MovieCard data={trending} />
             </Grid>
           ))}
       </Grid>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        height={200}
+      >
+        <Pagination
+          sx={{ display: isValidating ? "none" : "block" }}
+          count={trendingData?.total_pages}
+          size="large"
+          page={page}
+          onChange={(event, newValue) => {
+            setPage(newValue);
+          }}
+        />
+      </Stack>
     </>
   );
 };

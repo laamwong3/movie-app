@@ -88,7 +88,7 @@ export default function Layout(props: Props) {
 
       <Box
         sx={{
-          marginBottom: 20,
+          marginBottom: 5,
           marginTop: 10,
         }}
       >

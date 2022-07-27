@@ -3,57 +3,99 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, Stack } from "@mui/material";
+import { Badge, Box, CardActionArea, Stack } from "@mui/material";
 import Image from "next/image";
 import { TrendingResult } from "../pages/api/trending";
-import { img_300 } from "../config/imageConfig";
+import { img_300, unavailable } from "../config/imageConfig";
 import { motion } from "framer-motion";
 
 interface MovieCardProps {
-  movie: TrendingResult;
+  data: TrendingResult;
 }
 const cardSize = 300;
 
-export default function MovieCard({ movie }: MovieCardProps) {
+export default function MovieCard({ data }: MovieCardProps) {
   return (
-    <Card
-      sx={{
-        maxWidth: cardSize,
-        borderRadius: 5,
-        maxHeight: cardSize * 2,
-      }}
-      elevation={12}
+    <Badge
+      badgeContent={data.vote_average && data.vote_average?.toFixed(1)}
+      color={data.vote_average && data.vote_average > 6 ? "success" : "error"}
       component={motion.div}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
+      whileHover={{ scale: 1.1, opacity: 1 }}
+      whileTap={{ scale: 0.9, opacity: 1 }}
     >
-      <CardActionArea>
-        <Image
-          src={`${img_300}${movie.poster_path}`}
-          width={cardSize}
-          height={cardSize * 1.5}
-          alt={movie.title}
-        />
-        <CardContent>
-          <Typography
-            sx={{ fontSize: 10, fontWeight: "bold" }}
-            gutterBottom
-            component="div"
-            textAlign="center"
+      <Card
+        sx={{
+          width: cardSize,
+          borderRadius: 5,
+          height: cardSize * 2,
+        }}
+        elevation={12}
+      >
+        <CardActionArea
+          sx={{
+            width: "100%",
+            borderRadius: 5,
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Image
+            style={{ flex: 1 }}
+            src={
+              data.poster_path ? `${img_300}${data.poster_path}` : unavailable
+            }
+            width={cardSize}
+            height={cardSize * 1.5}
+            alt={data.title}
+          />
+
+          <CardContent
+            sx={{
+              flex: 1,
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            }}
           >
-            {movie.title ?? "No Title"}
-          </Typography>
-          <Stack direction="row">
-            <Typography variant="body2" color="text.secondary" sx={{ flex: 1 }}>
-              {movie.media_type}
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+              gutterBottom
+              component="div"
+              textAlign="center"
+              variant="h6"
+            >
+              {data.title ?? "No Title"}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {movie.release_date &&
-                new Date(movie.release_date).toDateString()}
-            </Typography>
-          </Stack>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+            <Stack direction="row">
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ flex: 1 }}
+              >
+                {data.media_type
+                  ? data.media_type?.charAt(0).toUpperCase() +
+                    data.media_type.slice(1)
+                  : "Unknown Type"}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {data.release_date
+                  ? new Date(data.release_date).toDateString()
+                  : "Unknown Date"}
+              </Typography>
+            </Stack>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </Badge>
   );
 }
