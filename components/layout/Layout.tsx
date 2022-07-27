@@ -90,6 +90,7 @@ export default function Layout(props: Props) {
         sx={{
           marginBottom: 5,
           marginTop: 10,
+          marginX: 2,
         }}
       >
         {props.children}

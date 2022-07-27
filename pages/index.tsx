@@ -1,4 +1,4 @@
-import { Grid, Pagination, Stack } from "@mui/material";
+import { Fade, Grid, Pagination, Stack } from "@mui/material";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -26,9 +26,11 @@ const Home: NextPage = () => {
       <Grid container gap={8} justifyContent="center">
         {trendingData?.results &&
           trendingData.results.map((trending, index) => (
-            <Grid item key={index}>
-              <MovieCard data={trending} />
-            </Grid>
+            <Fade in timeout={3000} key={index}>
+              <Grid item>
+                <MovieCard data={trending} />
+              </Grid>
+            </Fade>
           ))}
       </Grid>
       <Stack

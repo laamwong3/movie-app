@@ -5,8 +5,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Badge, Box, CardActionArea, Stack } from "@mui/material";
 import Image from "next/image";
-import { TrendingResult } from "../pages/api/trending";
-import { img_300, unavailable } from "../config/imageConfig";
+import { TrendingResult } from "../../pages/api/trending";
+import { img_300, unavailable } from "../../config/imageConfig";
 import { motion } from "framer-motion";
 
 interface MovieCardProps {
