@@ -1,8 +1,8 @@
 import { Chip, Grid, Stack } from "@mui/material";
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import useSWR from "swr";
-import { Genre } from "./api/genre";
+import { Genre, GenreResult } from "./api/genre";
 import { Movie } from "./api/movie";
 import DoneIcon from "@mui/icons-material/Done";
 import { Done } from "@mui/icons-material";
@@ -27,10 +27,10 @@ const Movie: NextPage = () => {
   useEffect(() => {
     if (genreData?.genres) {
       let tempGenres: GenreSet[] = [];
-      genreData.genres.map((genre, index) => {
+      genreData.genres.map((genre) => {
         tempGenres.push({
           id: genre.id ?? -1,
-          color: "primary",
+          color: "default",
           label: genre.name ?? "",
           selected: false,
         });
@@ -39,11 +39,19 @@ const Movie: NextPage = () => {
     }
   }, [genreData]);
 
-  const handleClick = (genreId: number) => {
-    // const genres.ma
+  const handleClick = (genreClicked: GenreSet) => {
+    setGenres((prevState) =>
+      prevState.map((genre) =>
+        genre.id === genreClicked.id
+          ? {
+              ...genre,
+              selected: !genre.selected,
+              color: genre.color === "primary" ? "default" : "primary",
+            }
+          : genre
+      )
+    );
   };
-
-  console.log(genres);
 
   return (
     <>
@@ -53,20 +61,13 @@ const Movie: NextPage = () => {
             <Grid item key={index}>
               <Chip
                 icon={genre.selected ? <DoneIcon /> : undefined}
-                onClick={() => handleClick(genre.id)}
                 label={genre.label}
                 color={genre.color}
                 clickable
+                onClick={() => handleClick(genre)}
               />
             </Grid>
           ))}
-
-        {/* {genreData?.genres &&
-          genreData.genres.map((gen, index) => (
-            <Grid item key={index}>
-              <Chip label={gen.name} clickable />
-            </Grid>
-          ))} */}
       </Grid>
     </>
   );
