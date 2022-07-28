@@ -1,3 +1,4 @@
+import ModalContext from "./ModalContext";
 import SearchBarContext from "./SearchBarContext";
 
 interface StateManagerProps {
@@ -5,7 +6,11 @@ interface StateManagerProps {
 }
 
 const StateManager = ({ children }: StateManagerProps) => {
-  return <SearchBarContext>{children}</SearchBarContext>;
+  return (
+    <SearchBarContext>
+      <ModalContext>{children}</ModalContext>
+    </SearchBarContext>
+  );
 };
 
 export default StateManager;
