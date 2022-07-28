@@ -80,7 +80,7 @@ export default function Layout(props: Props) {
               WebkitTextFillColor: "transparent",
             }}
           >
-            MOVIES HUB
+            ENTERTAINMENT HUB
           </Typography>
         </Toolbar>
       </AppBar>
