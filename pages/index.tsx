@@ -5,7 +5,7 @@ import Image from "next/image";
 import useSWR from "swr";
 import { Trending } from "./api/trending";
 import { img_300 } from "../config/imageConfig";
-import { MovieCard } from "../components";
+import { MovieCard, TrendingCard } from "../components";
 import { useState } from "react";
 import Movie from "./movie";
 
@@ -26,9 +26,9 @@ const Home: NextPage = () => {
       <Grid container gap={8} justifyContent="center">
         {trendingData?.results &&
           trendingData.results.map((trending, index) => (
-            <Fade in timeout={3000} key={index}>
+            <Fade in timeout={1000} key={index}>
               <Grid item>
-                <MovieCard data={trending} />
+                <TrendingCard data={trending} />
               </Grid>
             </Fade>
           ))}

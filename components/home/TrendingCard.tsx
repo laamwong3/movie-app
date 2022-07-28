@@ -1,4 +1,3 @@
-import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -8,13 +7,16 @@ import Image from "next/image";
 import { TrendingResult } from "../../pages/api/trending";
 import { img_300, unavailable } from "../../config/imageConfig";
 import { motion } from "framer-motion";
+import { MovieResult } from "../../pages/api/movie";
+import { useEffect } from "react";
+import { TvResult } from "../../pages/api/tv";
 
-interface MovieCardProps {
+interface TrendingCardProps {
   data: TrendingResult;
 }
 const cardSize = 300;
 
-export default function MovieCard({ data }: MovieCardProps) {
+export default function TrendingCard({ data }: TrendingCardProps) {
   return (
     <Badge
       badgeContent={data.vote_average && data.vote_average?.toFixed(1)}
