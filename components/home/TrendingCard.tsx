@@ -76,7 +76,7 @@ export default function TrendingCard({ data }: TrendingCardProps) {
               textAlign="center"
               variant="h6"
             >
-              {data.title ?? "No Title"}
+              {data.title || data.name || "NoTitle"}
             </Typography>
             <Stack direction="row">
               <Typography
@@ -90,9 +90,11 @@ export default function TrendingCard({ data }: TrendingCardProps) {
                   : "Unknown Type"}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {data.release_date
-                  ? new Date(data.release_date).toDateString()
-                  : "Unknown Date"}
+                {(data.release_date &&
+                  new Date(data.release_date).toDateString()) ||
+                  (data.first_air_date &&
+                    new Date(data.first_air_date).toDateString()) ||
+                  "Unknown Date"}
               </Typography>
             </Stack>
           </CardContent>

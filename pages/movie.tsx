@@ -94,7 +94,7 @@ const Movie: NextPage = () => {
           movieData.results.map((movie, index) => (
             <Fade in timeout={1000} key={index}>
               <Grid item>
-                <MovieCard data={movie} mediaType="movie" />
+                <MovieCard data={movie} />
               </Grid>
             </Fade>
           ))}

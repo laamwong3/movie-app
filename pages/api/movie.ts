@@ -29,7 +29,6 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Movie>
 ) {
-  console.log(req.query.genre_id);
   const url = `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.NEXT_PUBLIC_MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc&with_genres=${req.query.genre_id}&page=${req.query.page}`;
   fetch(url)
     .then((res) => res.json())
