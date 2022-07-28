@@ -79,6 +79,7 @@ export default function Layout(props: Props) {
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
+            textAlign="center"
           >
             ENTERTAINMENT HUB
           </Typography>

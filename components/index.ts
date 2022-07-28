@@ -3,6 +3,6 @@ import MovieCard from "./movie/MovieCard";
 import BottomNav from "./layout/BottomNav";
 import TrendingCard from "./home/TrendingCard";
 import TvCard from "./tv/TvCard";
-import CustomTab from "./search/CustomTab";
+import SearchBar from "./search/SearchBar";
 
-export { Layout, MovieCard, BottomNav, TrendingCard, TvCard, CustomTab };
+export { Layout, MovieCard, BottomNav, TrendingCard, TvCard, SearchBar };

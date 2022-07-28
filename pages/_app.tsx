@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { Layout } from "../components";
 import darkTheme from "../config/darkTheme";
+import StateManager from "../contexts/StateManager";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -13,9 +14,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <StateManager>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </StateManager>
       </ThemeProvider>
     </>
   );
