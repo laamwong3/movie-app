@@ -39,8 +39,8 @@ export default function DetailsModal({ data }: TrendingDetailsModalProps) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  console.log("Detail modal", data);
-
+  // console.log("Detail modal", data);
+  console.log(data);
   return (
     <div>
       <Modal
@@ -60,6 +60,7 @@ export default function DetailsModal({ data }: TrendingDetailsModalProps) {
             height={modalSize}
             alt={data.title || data.name}
           />
+          <Button onClick={() => setOpen(false)}>CLOSE</Button>
         </Box>
       </Modal>
     </div>

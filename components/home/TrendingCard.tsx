@@ -8,13 +8,14 @@ import { TrendingResult } from "../../pages/api/trending";
 import { img_300, unavailable } from "../../config/imageConfig";
 import { motion } from "framer-motion";
 import { MovieResult } from "../../pages/api/movie";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { TvResult } from "../../pages/api/tv";
 import { useModalContext } from "../../contexts/ModalContext";
 import useSWR from "swr";
 import { TvDetails } from "../../pages/api/tv-details";
 import { MovieDetails } from "../../pages/api/movie-details";
 import DetailsModal from "../common/DetailsModal";
+import { useRouter } from "next/router";
 
 interface TrendingCardProps {
   data: TrendingResult;
@@ -23,25 +24,21 @@ const cardSize = 300;
 
 export default function TrendingCard({ data }: TrendingCardProps) {
   const { setOpen } = useModalContext();
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data: tvDetails } = useSWR<TvDetails>(
-    () => (data.media_type === "tv" ? `/api/tv-details?id=${data.id}` : null),
-    fetcher
+  const [contentDetails, setContentDetails] = useState(
+    {} as TvDetails | MovieDetails
   );
-  const { data: movieDetails } = useSWR<MovieDetails>(
-    () =>
-      data.media_type === "movie" ? `/api/movie-details?id=${data.id}` : null,
-    fetcher
-  );
-  console.log("trending card", movieDetails);
+
+  const router = useRouter();
+
+  // console.log("trending card", movieDetails);
   return (
     <>
-      {data.media_type === "tv" ? (
+      {/* {data.media_type === "tv" ? (
         <>{tvDetails && <DetailsModal data={tvDetails} />}</>
       ) : (
         <>{movieDetails && <DetailsModal data={movieDetails} />}</>
-      )}
-
+      )} */}
+      {/* <DetailsModal data={contentDetails} /> */}
       <Badge
         badgeContent={data.vote_average && data.vote_average?.toFixed(1)}
         color={data.vote_average && data.vote_average > 6 ? "success" : "error"}
@@ -58,7 +55,7 @@ export default function TrendingCard({ data }: TrendingCardProps) {
           elevation={12}
         >
           <CardActionArea
-            onClick={() => setOpen(true)}
+            onClick={() => router.push(`/${data.id}?type=${data.media_type}`)}
             sx={{
               width: "100%",
               borderRadius: 5,

@@ -5,6 +5,7 @@ import TrendingCard from "./home/TrendingCard";
 import TvCard from "./tv/TvCard";
 import SearchBar from "./search/SearchBar";
 import DetailsModal from "./common/DetailsModal";
+import DetailsCard from "./details/DetailsCard";
 
 export {
   Layout,
@@ -14,4 +15,5 @@ export {
   TvCard,
   SearchBar,
   DetailsModal,
+  DetailsCard,
 };
