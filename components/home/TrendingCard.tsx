@@ -11,7 +11,10 @@ import { MovieResult } from "../../pages/api/movie";
 import { useEffect } from "react";
 import { TvResult } from "../../pages/api/tv";
 import { useModalContext } from "../../contexts/ModalContext";
-import { DetailsModal } from "../../components";
+import { TrendingDetailsModal } from "../../components";
+import useSWR from "swr";
+import { TvDetails } from "../../pages/api/tv-details";
+import { MovieDetails } from "../../pages/api/movie-details";
 
 interface TrendingCardProps {
   data: TrendingResult;
@@ -20,15 +23,31 @@ const cardSize = 300;
 
 export default function TrendingCard({ data }: TrendingCardProps) {
   const { setOpen } = useModalContext();
+  const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data: tvDetails } = useSWR<TvDetails>(
+    () => (data.media_type === "tv" ? `/api/tv-details?id=${data.id}` : null),
+    fetcher
+  );
+  const { data: movieDetails } = useSWR<MovieDetails>(
+    () =>
+      data.media_type === "movie" ? `/api/movie-details?id=${data.id}` : null,
+    fetcher
+  );
+
   return (
     <>
-      <DetailsModal />
+      {data.media_type === "tv" ? (
+        <>{tvDetails && <TrendingDetailsModal data={tvDetails} />}</>
+      ) : (
+        <>{movieDetails && <TrendingDetailsModal data={movieDetails} />}</>
+      )}
+
       <Badge
         badgeContent={data.vote_average && data.vote_average?.toFixed(1)}
         color={data.vote_average && data.vote_average > 6 ? "success" : "error"}
-        component={motion.div}
-        whileHover={{ scale: 1.1, opacity: 1 }}
-        whileTap={{ scale: 0.9, opacity: 1 }}
+        // component={motion.div}
+        // whileHover={{ scale: 1.1, opacity: 1 }}
+        // whileTap={{ scale: 0.9, opacity: 1 }}
       >
         <Card
           sx={{
