@@ -11,10 +11,10 @@ import { MovieResult } from "../../pages/api/movie";
 import { useEffect } from "react";
 import { TvResult } from "../../pages/api/tv";
 import { useModalContext } from "../../contexts/ModalContext";
-import { TrendingDetailsModal } from "../../components";
 import useSWR from "swr";
 import { TvDetails } from "../../pages/api/tv-details";
 import { MovieDetails } from "../../pages/api/movie-details";
+import DetailsModal from "../common/DetailsModal";
 
 interface TrendingCardProps {
   data: TrendingResult;
@@ -33,13 +33,13 @@ export default function TrendingCard({ data }: TrendingCardProps) {
       data.media_type === "movie" ? `/api/movie-details?id=${data.id}` : null,
     fetcher
   );
-
+  console.log("trending card", movieDetails);
   return (
     <>
       {data.media_type === "tv" ? (
-        <>{tvDetails && <TrendingDetailsModal data={tvDetails} />}</>
+        <>{tvDetails && <DetailsModal data={tvDetails} />}</>
       ) : (
-        <>{movieDetails && <TrendingDetailsModal data={movieDetails} />}</>
+        <>{movieDetails && <DetailsModal data={movieDetails} />}</>
       )}
 
       <Badge
@@ -75,7 +75,7 @@ export default function TrendingCard({ data }: TrendingCardProps) {
               }
               width={cardSize}
               height={cardSize * 1.5}
-              alt={data.title}
+              alt={data.title || data.name}
             />
 
             <CardContent

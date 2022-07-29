@@ -9,8 +9,14 @@ import useSWR from "swr";
 import { TvDetails } from "../../pages/api/tv-details";
 import { MovieDetails } from "../../pages/api/movie-details";
 import { type } from "os";
+import Image from "next/image";
+import {
+  img_300,
+  img_500,
+  unavailableLandscape,
+} from "../../config/imageConfig";
 
-const modalSize = 500;
+const modalSize = 600;
 
 const style: SxProps<Theme> = {
   position: "absolute" as "absolute",
@@ -20,41 +26,40 @@ const style: SxProps<Theme> = {
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
-  width: { sm: modalSize, lg: modalSize * 2, xs: 300 },
+  p: 1,
+  width: modalSize,
 };
 
 interface TrendingDetailsModalProps {
-  data: MovieDetails | TvDetails;
+  data: MovieDetails & TvDetails;
 }
 
-type MediaType = MovieDetails | TvDetails;
-function typeCheck(checkingType: MediaType): checkingType is TvDetails {
-  if ((checkingType as TvDetails).first_air_date) {
-    return true;
-  }
-  return false;
-}
-// type isTv<T> = T extends MovieDetails ? TvDetails : MovieDetails;
-// type result = isTv<MediaType>;
-export default function TrendingDetailsModal({
-  data,
-}: TrendingDetailsModalProps) {
+export default function DetailsModal({ data }: TrendingDetailsModalProps) {
   const { open, setOpen } = useModalContext();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  console.log("Detail modal", data);
+
   return (
     <div>
-      <Modal open={open} onClose={handleClose} hideBackdrop>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        hideBackdrop
+      >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-          <Button onClick={handleClose}>Close</Button>
+          <Image
+            src={
+              data.backdrop_path
+                ? `${img_500}${data.backdrop_path}`
+                : unavailableLandscape
+            }
+            width={modalSize * 2}
+            height={modalSize}
+            alt={data.title || data.name}
+          />
         </Box>
       </Modal>
     </div>

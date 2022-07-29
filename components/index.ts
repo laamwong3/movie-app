@@ -4,7 +4,7 @@ import BottomNav from "./layout/BottomNav";
 import TrendingCard from "./home/TrendingCard";
 import TvCard from "./tv/TvCard";
 import SearchBar from "./search/SearchBar";
-import TrendingDetailsModal from "./home/TrendingDetailsModal";
+import DetailsModal from "./common/DetailsModal";
 
 export {
   Layout,
@@ -13,5 +13,5 @@ export {
   TrendingCard,
   TvCard,
   SearchBar,
-  TrendingDetailsModal,
+  DetailsModal,
 };
