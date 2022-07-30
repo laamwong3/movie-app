@@ -61,7 +61,7 @@ const Details: NextPage = () => {
 
   //   console.log(matches);
   useEffect(() => {
-    if (tvDetails && video?.results && video?.results[0].key) {
+    if (tvDetails && video?.results && video?.results[0]) {
       setContents({
         imageNormal: tvDetails.poster_path
           ? `${img_500}${tvDetails.poster_path}`
@@ -77,7 +77,7 @@ const Details: NextPage = () => {
           ? new Date(tvDetails.first_air_date).getFullYear().toString()
           : "No Date",
       });
-    } else if (movieDetails && video?.results && video?.results[0].key) {
+    } else if (movieDetails && video?.results && video?.results[0]) {
       setContents({
         imageNormal: movieDetails.poster_path
           ? `${img_500}${movieDetails.poster_path}`
@@ -96,7 +96,8 @@ const Details: NextPage = () => {
     }
   }, [tvDetails, movieDetails, video]);
 
-  // console.log(contents?.video);
+  console.log(video);
+  console.log(contents?.video);
   return (
     <>
       <Stack

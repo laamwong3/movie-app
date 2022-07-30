@@ -27,8 +27,8 @@ const Carousel = ({ id, type }: CarouselProps) => {
             each.profile_path ? `${img_300}${each.profile_path}` : unavailable
           }
           alt={each.name}
-          width={100}
-          height={150}
+          width={200}
+          height={300}
           onDragStart={(e) => e.preventDefault()}
         />
       </Stack>

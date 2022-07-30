@@ -42,9 +42,9 @@ export default function TrendingCard({ data }: TrendingCardProps) {
       <Badge
         badgeContent={data.vote_average && data.vote_average?.toFixed(1)}
         color={data.vote_average && data.vote_average > 6 ? "success" : "error"}
-        // component={motion.div}
-        // whileHover={{ scale: 1.1, opacity: 1 }}
-        // whileTap={{ scale: 0.9, opacity: 1 }}
+        component={motion.div}
+        whileHover={{ scale: 1.1, opacity: 1 }}
+        whileTap={{ scale: 0.9, opacity: 1 }}
       >
         <Card
           sx={{

@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { MovieResult } from "../../pages/api/movie";
 import { useEffect } from "react";
 import { TvResult } from "../../pages/api/tv";
+import { useRouter } from "next/router";
 
 interface TvCardProps {
   data: TvResult;
@@ -17,6 +18,7 @@ interface TvCardProps {
 const cardSize = 300;
 
 export default function TvCard({ data }: TvCardProps) {
+  const router = useRouter();
   return (
     <Badge
       badgeContent={data.vote_average && data.vote_average?.toFixed(1)}
@@ -34,6 +36,7 @@ export default function TvCard({ data }: TvCardProps) {
         elevation={12}
       >
         <CardActionArea
+          onClick={() => router.push(`/${data.id}?type=tv`)}
           sx={{
             width: "100%",
             borderRadius: 5,
