@@ -15,6 +15,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import { Carousel } from "../components";
 import {
   img_500,
   unavailable,
@@ -60,7 +61,7 @@ const Details: NextPage = () => {
 
   //   console.log(matches);
   useEffect(() => {
-    if (tvDetails && video) {
+    if (tvDetails && video?.results && video?.results[0].key) {
       setContents({
         imageNormal: tvDetails.poster_path
           ? `${img_500}${tvDetails.poster_path}`
@@ -76,7 +77,7 @@ const Details: NextPage = () => {
           ? new Date(tvDetails.first_air_date).getFullYear().toString()
           : "No Date",
       });
-    } else if (movieDetails && video) {
+    } else if (movieDetails && video?.results && video?.results[0].key) {
       setContents({
         imageNormal: movieDetails.poster_path
           ? `${img_500}${movieDetails.poster_path}`
@@ -87,7 +88,7 @@ const Details: NextPage = () => {
         title: movieDetails.title ?? "No Name",
         description: movieDetails.overview ?? "No Description",
         tagline: movieDetails.tagline ?? "No Tagline",
-        video: video?.results[0].key,
+        video: video?.results[0].key ?? "",
         year: movieDetails.release_date
           ? new Date(movieDetails.release_date).getFullYear().toString()
           : "No Date",
@@ -95,21 +96,25 @@ const Details: NextPage = () => {
     }
   }, [tvDetails, movieDetails, video]);
 
-  //   console.log(movieDetails);
-
+  console.log(contents?.video);
   return (
     <>
-      <Stack direction="row" justifyContent="center" alignItems="center">
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        mt={{ xs: 0, md: -7 }}
+      >
         <Card
           sx={{
             width: { xs: "80vw", md: "90vw" },
-            height: { xs: 600, md: 600 },
+            // height: { xs: 600, md: "80vh" },
             borderRadius: 3,
           }}
         >
           <Stack
             direction={{ md: "row", sm: "column" }}
-            sx={{ height: { xs: 600, md: 600 } }}
+            sx={{ height: { xs: "60vh", md: "75vh" } }}
           >
             {contents && (
               <>
@@ -145,6 +150,7 @@ const Details: NextPage = () => {
                       height: 100,
                       width: "100%",
                       overflow: "scroll",
+                      scrollBehavior: "smooth",
                     }}
                     elevation={12}
                   >
@@ -152,13 +158,20 @@ const Details: NextPage = () => {
                       {contents.description}
                     </Typography>
                   </Paper>
+                  <Carousel />
                   <Stack
                     spacing={5}
                     direction="row"
                     justifyContent="center"
                     alignItems="center"
                   >
-                    <Button variant="contained">WATCH TRAILER</Button>
+                    <Button
+                      variant="contained"
+                      href={`https://www.youtube.com/watch?v=${contents.video}`}
+                      target="_blank"
+                    >
+                      WATCH TRAILER
+                    </Button>
                     <Button variant="contained" onClick={() => router.back()}>
                       BACK
                     </Button>

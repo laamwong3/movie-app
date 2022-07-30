@@ -6,6 +6,7 @@ import TvCard from "./tv/TvCard";
 import SearchBar from "./search/SearchBar";
 import DetailsModal from "./common/DetailsModal";
 import DetailsCard from "./details/DetailsCard";
+import Carousel from "./details/Carousel";
 
 export {
   Layout,
@@ -16,4 +17,5 @@ export {
   SearchBar,
   DetailsModal,
   DetailsCard,
+  Carousel,
 };
