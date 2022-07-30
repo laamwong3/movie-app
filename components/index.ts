@@ -5,8 +5,7 @@ import TrendingCard from "./home/TrendingCard";
 import TvCard from "./tv/TvCard";
 import SearchBar from "./search/SearchBar";
 import DetailsModal from "./common/DetailsModal";
-import DetailsCard from "./details/DetailsCard";
-import Carousel from "./details/Carousel";
+import Carousel from "./common/Carousel";
 
 export {
   Layout,
@@ -16,6 +15,5 @@ export {
   TvCard,
   SearchBar,
   DetailsModal,
-  DetailsCard,
   Carousel,
 };

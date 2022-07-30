@@ -96,7 +96,7 @@ const Details: NextPage = () => {
     }
   }, [tvDetails, movieDetails, video]);
 
-  console.log(contents?.video);
+  // console.log(contents?.video);
   return (
     <>
       <Stack
@@ -107,26 +107,22 @@ const Details: NextPage = () => {
       >
         <Card
           sx={{
-            width: { xs: "80vw", md: "90vw" },
+            width: "80vw",
+            height: "400",
+            mb: 4,
+            // width: { xs: "80vw", md: "90vw" },
             // height: { xs: 600, md: "80vh" },
             borderRadius: 3,
           }}
         >
-          <Stack
-            direction={{ md: "row", sm: "column" }}
-            sx={{ height: { xs: "60vh", md: "75vh" } }}
-          >
+          <Stack direction="column" sx={{ height: "100%" }}>
             {contents && (
               <>
                 <Image
                   //   style={{ borderRadius: 5 }}
-                  src={
-                    isSmallScreen
-                      ? contents.imageLandscape
-                      : contents.imageNormal
-                  }
-                  width={isSmallScreen ? 400 : 400}
-                  height={isSmallScreen ? 200 : 600}
+                  src={contents.imageLandscape}
+                  width={800}
+                  height={400}
                   alt={contents.title}
                 />
 
@@ -136,7 +132,7 @@ const Details: NextPage = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     flexDirection: "column",
-                    // height: { xs: 600, md: 600 },
+                    height: 400,
                   }}
                 >
                   <Typography variant="h4" textAlign="center" gutterBottom>
@@ -145,12 +141,13 @@ const Details: NextPage = () => {
                   </Typography>
                   <Paper
                     sx={{
-                      border: "1px solid white",
+                      // border: "1px solid white",
                       p: 1,
                       height: 100,
                       width: "100%",
                       overflow: "scroll",
                       scrollBehavior: "smooth",
+                      mt: 2,
                     }}
                     elevation={12}
                   >
@@ -158,12 +155,20 @@ const Details: NextPage = () => {
                       {contents.description}
                     </Typography>
                   </Paper>
-                  <Carousel />
+                  {details && type && (
+                    <Box sx={{ mt: 5 }}>
+                      <Carousel
+                        id={details?.toString()}
+                        type={type?.toString()}
+                      />
+                    </Box>
+                  )}
                   <Stack
                     spacing={5}
                     direction="row"
                     justifyContent="center"
                     alignItems="center"
+                    mt={5}
                   >
                     <Button
                       variant="contained"
